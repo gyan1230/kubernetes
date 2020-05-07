@@ -35,3 +35,44 @@ Accesing configMaps in PODs:
 
 volumeMounts : 
 mountPath where the volume mounted on and the “name” of the volume which is “”config””  name in spec.volumes.
+
+ConfigMap using literal value :
+kubectl create configmap <name> - - from-literal=specical.key=value
+Eg
+ — kubectl create configmap gyan-lit-conf --from-literal=special.key=k8s
+
+kubectl get configmap gyan-lit-conf -o yaml
+
+apiVersion: v1
+data:
+  special.key: k8s
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2020-05-05T15:33:14Z"
+  name: gyan-lit-conf
+  namespace: default
+  resourceVersion: "945108"
+  selfLink: /api/v1/namespaces/default/configmaps/gyan-lit-conf
+  uid: bc113b00-8ee5-11ea-84fc-42010af00032
+
+*******************************************************************************************************
+When we reference the config map inside the POD, we use the key (here special.key)
+2 ways to reference configmap inside the POD, by volume mount or by env variable.
+*******************************************************************************************************
+
+By env var in POD manifest file
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+	name: test-pod
+spec:
+    containers:
+	    -name: test-container
+		  image: redis
+		  env:
+		    -name: custom-env-name-in-pod
+			  valueFrom:
+				configMapKeyRef:
+					name: gyan-lit-config		<created earlier>
+					key: special.key				<created b4>
