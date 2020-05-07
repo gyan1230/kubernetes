@@ -59,20 +59,3 @@ metadata:
 When we reference the config map inside the POD, we use the key (here special.key)
 2 ways to reference configmap inside the POD, by volume mount or by env variable.
 *******************************************************************************************************
-
-By env var in POD manifest file
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-	name: test-pod
-spec:
-    containers:
-	    -name: test-container
-		  image: redis
-		  env:
-		    -name: custom-env-name-in-pod
-			  valueFrom:
-				configMapKeyRef:
-					name: gyan-lit-config		<created earlier>
-					key: special.key				<created b4>
