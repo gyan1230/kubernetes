@@ -24,3 +24,14 @@ kubectl describe configmaps game-config
 kubectl get configmap game-config -o yaml
 #delete the configuration
 kubectl delete configmap game-config
+
+
+Accesing configMaps in PODs:
+
+1. Create a POD manifestfile
+2. Create a configmap and reference it to pod spec volume section
+3. Key is nothing but a file name used when creating the volume
+4. Path is target location where data is present inside the POD.
+
+volumeMounts : 
+mountPath where the volume mounted on and the “name” of the volume which is “”config””  name in spec.volumes.
